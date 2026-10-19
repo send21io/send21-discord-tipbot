@@ -1,0 +1,38 @@
+{
+  "name": "send21-discord-tipbot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tip anyone in your Discord server with crypto. send21 pay links, straight to their own wallet.",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=20.12" },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/src/index.js",
+    "register": "tsx scripts/register-commands.ts",
+    "webhook:register": "tsx scripts/register-webhook.ts",
+    "send-sample": "tsx scripts/send-sample.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm test"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/express": "^5.0.3",
+    "@types/node": "^20.19.0",
+    "@types/qrcode": "^1.5.5",
+    "eslint": "^9.39.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^3.2.4"
+  }
+}
