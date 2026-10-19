@@ -28,7 +28,7 @@
    ```
 5. **Run.** `npm run build && npm start`. In Discord: `/tipme set` once, then `/tip`.
 
-🧪 **No key yet?** Leave `SEND21_API_KEY` empty and run `npm run dev`. Mock mode makes no send21 calls; the Pay button opens a local page where you can simulate *paid*, *short* or *expired*.
+🧪 **No send21 key yet?** Do step 1 (Discord is needed even in mock mode), `cp .env.example .env`, fill in `DISCORD_TOKEN` + `DISCORD_APP_ID`, leave `SEND21_API_KEY` empty, then `npm install && npm run register && npm run dev`. Mock mode makes no send21 calls; 💳 Pay opens a local page on http://localhost:3000 where you pick a coin and simulate ✅ paid, 👀 seen, ⚠️ short → 👍 accept / ↩️ decline, or ⌛ expired. The tip message updates by itself. Just looking? Open [docs/embed-mock.html](docs/embed-mock.html).
 
 ## Commands
 

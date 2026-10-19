@@ -14,6 +14,8 @@ export interface Config {
   shortfallPercent: number;
   dataFile: string;
   mock: boolean;
+  /** Mock mode: where the local mock pay page lives. Always this machine, never PUBLIC_URL. */
+  mockPayBase: string;
 }
 
 const num = (v: string | undefined, def: number, min: number, max: number, name: string): number => {
@@ -25,7 +27,10 @@ const num = (v: string | undefined, def: number, min: number, max: number, name:
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const need = (k: string) => {
     const v = env[k]?.trim();
-    if (!v) throw new Error(`${k} is missing. Copy .env.example to .env and fill it in.`);
+    if (!v) {
+      const hint = k.startsWith("DISCORD") ? " The bot needs a Discord app even in mock mode: see Quickstart step 1 (free). Just looking? Open docs/embed-mock.html." : "";
+      throw new Error(`${k} is missing. Copy .env.example to .env and fill it in.${hint}`);
+    }
     return v;
   };
   const apiKey = env.SEND21_API_KEY?.trim() || null;
@@ -48,6 +53,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     shortfallPercent: num(env.TIP_SHORTFALL_PERCENT, 2, 0, 10, "TIP_SHORTFALL_PERCENT"),
     dataFile: env.DATA_FILE?.trim() || "./data/tipbot.json",
     mock,
+    mockPayBase: `http://localhost:${port}`,
   };
 }
 

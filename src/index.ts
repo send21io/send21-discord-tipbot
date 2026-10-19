@@ -8,7 +8,7 @@ import { createWebhookApp } from "./webhook.js";
 const cfg = loadConfig();
 const store = new Store(cfg.dataFile);
 const selfUrl = `http://127.0.0.1:${cfg.port}`;
-const mockClient = cfg.mock ? createMockClient(cfg.publicUrl) : null;
+const mockClient = cfg.mock ? createMockClient(cfg.mockPayBase) : null;
 const send21 = mockClient ?? createSend21Client({ apiBase: cfg.send21ApiBase, apiKey: cfg.send21ApiKey as string });
 
 const bot = createBot(cfg, store, send21);
@@ -20,7 +20,7 @@ const app = createWebhookApp({
 });
 
 app.listen(cfg.port, () => {
-  console.log(`🪝 webhook on :${cfg.port}/webhooks/send21${cfg.mock ? "  🧪 MOCK mode: no send21 calls, pay links open the local mock page" : ""}`);
+  console.log(`🪝 webhook on :${cfg.port}/webhooks/send21${cfg.mock ? "  🧪 MOCK mode: no send21 calls, pay links open ${cfg.mockPayBase}/mock/pay/…" : ""}`);
 });
 bot.client.once(Events.ClientReady, (c) => console.log(`🤖 logged in as ${c.user.tag}`));
 await bot.login();
