@@ -22,6 +22,7 @@
    npm install
    npm run register       # pushes /tip and /tipme (set DISCORD_GUILD_ID for instant updates)
    ```
+   - 🔐 **Approve receiving addresses in send21.** New send21 accounts (created on or after 20 Oct 2026) only accept receiving addresses the account owner approved, including Lightning addresses. Each address set with `/tipme set` has to be approved in the bot's send21 account before tips to it work: add it in the send21 app, or propose it from an agent (MCP `propose_receiving_address`), then sign in and approve it with a passkey or authenticator code. No API key can approve an address. Older accounts can opt in under Settings.
 4. **Webhook.** Put the bot behind your own HTTPS address (for example a reverse proxy with a free Let's Encrypt certificate; send21 refuses private addresses). Then:
    ```bash
    npm run webhook:register   # prints SEND21_WEBHOOK_SECRET once: paste it into .env
@@ -75,6 +76,10 @@ sequenceDiagram
 Payments within `TIP_SHORTFALL_PERCENT` (default 2%) short, such as exchange withdrawal fees, are accepted automatically through send21's `shortfallPolicy`. Other different amounts wait for the owner of the bot's send21 account to accept or decline them on send21.
 
 **Fees.** The bot's send21 account (the server admin) pays one small send21 fee per paid tip (0.49% on small payments, at least $0.01). The receiver always gets the full amount. See [pricing](https://send21.io/pricing).
+
+## Troubleshooting
+
+- **422 `address_not_approved`:** a receiving address isn't approved in your send21 account, so nothing was created. Sign in to send21, approve the address (passkey or authenticator code), then try again.
 
 ## Security notes
 
